@@ -1,0 +1,50 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Package Files ###
+*.jar
+*.war
+*.ear
+*.swp
+datanucleus.log
+/bin/
+*.log
+event-sourcing/Journal.json
+*.class
+tmp/
+*.tmp
+*.bak
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
