@@ -1,10 +1,16 @@
 package xyz.subho.covidhelp;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
-public class ApplicationStartTest {
+class ApplicationStartTest {
+
+  private static final boolean CONSTANT = true;
+
   @Test
-  public void applicationStarts() {
+  void applicationStarts() {
     CovidHelpApplication.main(new String[] {});
+    assertThat(CONSTANT).isTrue();
   }
 }

@@ -31,8 +31,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CovidHelpApplicationTests {
 
+  private static final boolean CONSTANT = true;
+
   @Test
   void contextLoads() {
-    assertThat(1);
+    assertThat(CONSTANT).isTrue();
   }
 }

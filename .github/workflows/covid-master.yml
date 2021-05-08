@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 #
 
-name: COVID Help Master CI
+name: Master CI
 
 on:
   push:

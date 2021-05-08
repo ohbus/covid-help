@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 #
 
-name: COVID Help PR Checker
+name: PR Checker
 
 on:
   pull_request:

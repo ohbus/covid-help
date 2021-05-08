@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 #
 
-name: COVID Help CI
+name: CI
 
 on:
   push:
