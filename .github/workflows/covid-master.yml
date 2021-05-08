@@ -128,3 +128,54 @@ jobs:
       run: |
         ./mvnw -e spotless:check
         echo "Run the command './mvnw spotless:apply' to fix Java formatting if this job fails"
+
+  
+  build-and-push:
+
+    needs: check-compilation
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: 'adopt'
+      
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      
+      - name: Build Application
+        run: ./mvnw -B clean verify
+  
+      - name: Build and Push COVID Help Application Docker Image to DockerHub.io
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_UNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWD }}
+          dockerfile: Dockerfile
+          registry: docker.io
+          repository: subhrodip/covid-help
+          tags: master
+          labels: pipeline_build=true,cloud_build=true
+          push: true
+
+      - name: Build and Push COVID Help Application Docker Image to GHCR.io
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ohbus
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          registry: ghcr.io
+          repository: ohbus/covid-help/app
+          tags: master
+          labels: pipeline_build=true,cloud_build=true
+          push: true
