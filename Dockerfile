@@ -21,34 +21,16 @@
 # THE SOFTWARE.
 #
 
-version: 2
+FROM openjdk:11-jre-slim
 
-jobs:
-  
-  sonar-pr:
-    
-    docker:
-      - image: cimg/openjdk:11.0-node
-    steps:
-    - checkout
-    - restore_cache:
-        key: covid-help-sonar-pr-{{ checksum "pom.xml" }}
-    - run: |
-        if [ -n "${CIRCLE_PR_NUMBER}" ]; then
-          MAVEN_OPTS="-Xmx3000m" xvfb-run ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-             -Dsonar.pullrequest.key=${CIRCLE_PR_NUMBER} \
-             -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
-             -Dsonar.pullrequest.base=master
-        else
-          echo "No Sonar PR analysis as this is not a pull request"
-        fi
-    - save_cache:
-        key: covid-help-sonar-pr-{{ checksum "pom.xml" }}
-        paths:
-        - ~/.m2
+LABEL maintainer="Subhrodip Mohanta hello@subho.xyz"
+LABEL artifact="covid-help"
+LABEL name="COVID Help"
 
-workflows:
-  version: 2
-  all:
-    jobs:
-    - sonar-pr
+ARG JAR_FILE=target/*.jar
+
+COPY ${JAR_FILE} app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT [ "java", "-jar", "/app.jar" ]
