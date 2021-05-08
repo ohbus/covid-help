@@ -25,7 +25,7 @@ name: COVID Help CI
 
 on:
   push:
-    branches: [ '!master', '**' ]
+    branches-ignore: [ 'master' ]
 
 jobs:
   check-compilation:
