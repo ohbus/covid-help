@@ -21,41 +21,56 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.utils.model;
+package xyz.subho.covidhelp.entity;
 
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@Entity
 @AllArgsConstructor
 @Data
-public class Location {
+public class User {
 
-  private Double latitude;
-  private Double longitude;
-  private Double accuracy;
-  private Date timestamp;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id")
+  private Long userId;
 
-  /**
-   * Default setter for timestmap
-   *
-   * @param Date
-   */
-  public void setTimestamp(Date date) {
-    this.timestamp = date;
-  }
+  private String name;
+  private String contactNo;
+  private String emailId;
 
-  /** This method overloads so that we can automatically generate the timestamp from System Time */
-  public void setTimestamp() {
-    this.timestamp = new Date(System.currentTimeMillis());
-  }
+  private String lastIp;
+  private String lastLogin;
+
+  private String oxygenLeadsList;
 
   /**
-   * This method is overloaded so that an long literal can be taken for setting timestamp
-   *
-   * @param Long
+   * @param name
+   * @param contactNo
+   * @param emailId
+   * @param lastIp
+   * @param lastLogin
+   * @param oxygenLeadsList
    */
-  public void setTimestamp(Long currentTimeMillis) {
-    this.timestamp = new Date(currentTimeMillis);
+  public User(
+      String name,
+      String contactNo,
+      String emailId,
+      String lastIp,
+      String lastLogin,
+      String oxygenLeadsList) {
+
+    this.name = name;
+    this.contactNo = contactNo;
+    this.emailId = emailId;
+    this.lastIp = lastIp;
+    this.lastLogin = lastLogin;
+    this.oxygenLeadsList = oxygenLeadsList;
   }
 }
