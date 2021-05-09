@@ -89,7 +89,7 @@ public class OxygenLead {
    * @param lastUnavailableAt
    * @param unavailableCount
    */
-  public OxygenLead(
+  public OxygenLead( // NOSONAR
       String oxyPropName,
       String oxyPropContactPrimary,
       String oxyPropContactSecondary,
