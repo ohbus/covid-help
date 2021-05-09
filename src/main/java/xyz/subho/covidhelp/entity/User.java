@@ -23,6 +23,7 @@
 
 package xyz.subho.covidhelp.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,8 +33,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class User {
 
   @Id
@@ -45,10 +46,22 @@ public class User {
   private String contactNo;
   private String emailId;
 
+  private String currentIp;
+  private Date currentLogin;
   private String lastIp;
-  private String lastLogin;
+  private Date lastLogin;
 
-  private String oxygenLeadsList;
+  /** Default Constructor */
+  public User() {
+    this.userId = 0L;
+    this.name = "";
+    this.contactNo = "";
+    this.emailId = "";
+    this.currentIp = "";
+    this.currentLogin = new Date(0);
+    this.lastIp = "";
+    this.lastLogin = new Date(0);
+  }
 
   /**
    * @param name
@@ -58,19 +71,18 @@ public class User {
    * @param lastLogin
    * @param oxygenLeadsList
    */
-  public User(
-      String name,
-      String contactNo,
-      String emailId,
-      String lastIp,
-      String lastLogin,
-      String oxygenLeadsList) {
-
+  public User(String name, String contactNo, String emailId, String lastIp, Date lastLogin) {
     this.name = name;
     this.contactNo = contactNo;
     this.emailId = emailId;
     this.lastIp = lastIp;
     this.lastLogin = lastLogin;
-    this.oxygenLeadsList = oxygenLeadsList;
+  }
+
+  public void updateLastLogin(String currentIp) {
+    this.lastLogin = this.currentLogin;
+    this.lastIp = this.currentIp;
+    this.currentLogin = new Date(System.currentTimeMillis());
+    this.currentIp = currentIp;
   }
 }

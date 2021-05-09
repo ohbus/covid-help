@@ -23,6 +23,7 @@
 
 package xyz.subho.covidhelp.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,9 +47,9 @@ public class OxygenLead {
   private String oxyPropContactPrimary;
   private String oxyPropContactSecondary;
 
-  private String locationLat;
-  private String locationLon;
-  private String locationAcu;
+  private BigDecimal locationLat;
+  private BigDecimal locationLon;
+  private BigDecimal locationAcu;
   private Date locationTimestamp;
   private String locationUrl;
 
@@ -56,6 +57,23 @@ public class OxygenLead {
   private Integer verifiedCount;
   private Date lastUnavailableAt;
   private Integer unavailableCount;
+
+  /** Default Constructor */
+  public OxygenLead() {
+    this.oxyLeadId = 0L;
+    this.oxyPropName = "";
+    this.oxyPropContactPrimary = "";
+    this.oxyPropContactSecondary = "";
+    this.locationLat = BigDecimal.valueOf(0D);
+    this.locationLon = BigDecimal.valueOf(0D);
+    this.locationAcu = BigDecimal.valueOf(0D);
+    this.locationTimestamp = null;
+    this.locationUrl = "";
+    this.lastVerifiedAt = null;
+    this.verifiedCount = 0;
+    this.lastUnavailableAt = null;
+    this.unavailableCount = 0;
+  }
 
   /**
    * @param oxyPropName
@@ -75,9 +93,9 @@ public class OxygenLead {
       String oxyPropName,
       String oxyPropContactPrimary,
       String oxyPropContactSecondary,
-      String locationLat,
-      String locationLon,
-      String locationAcu,
+      BigDecimal locationLat,
+      BigDecimal locationLon,
+      BigDecimal locationAcu,
       Date locationTimestamp,
       String locationUrl,
       Date lastVerifiedAt,
@@ -96,5 +114,60 @@ public class OxygenLead {
     this.verifiedCount = verifiedCount;
     this.lastUnavailableAt = lastUnavailableAt;
     this.unavailableCount = unavailableCount;
+  }
+
+  /**
+   * @param locationLat
+   * @param locationLon
+   * @param locationAcu
+   * @param locationTimestamp
+   * @param locationUrl
+   */
+  public void updateLocation(
+      BigDecimal locationLat,
+      BigDecimal locationLon,
+      BigDecimal locationAcu,
+      Date locationTimestamp,
+      String locationUrl) {
+    this.locationLat = locationLat;
+    this.locationLon = locationLon;
+    this.locationAcu = locationAcu;
+    this.locationTimestamp = locationTimestamp;
+    this.locationUrl = locationUrl;
+  }
+
+  /**
+   * @param locationLat
+   * @param locationLon
+   * @param locationAcu
+   * @param locationTimestamp
+   */
+  public void updateLocation(
+      BigDecimal locationLat,
+      BigDecimal locationLon,
+      BigDecimal locationAcu,
+      Date locationTimestamp) {
+    this.locationLat = locationLat;
+    this.locationLon = locationLon;
+    this.locationAcu = locationAcu;
+    this.locationTimestamp = locationTimestamp;
+  }
+
+  public void setLastVerifiedAt() {
+    this.lastUnavailableAt = new Date(System.currentTimeMillis());
+  }
+
+  public void setLastUnavailableAt() {
+    this.lastUnavailableAt = new Date(System.currentTimeMillis());
+  }
+
+  public void updateVerify() {
+    setLastVerifiedAt();
+    ++this.verifiedCount;
+  }
+
+  public void updateUnavailable() {
+    setLastUnavailableAt();
+    ++this.unavailableCount;
   }
 }

@@ -23,18 +23,39 @@
 
 package xyz.subho.covidhelp.utils.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import xyz.subho.covidhelp.entity.OxygenLead;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class Location {
 
-  private Double latitude;
-  private Double longitude;
-  private Double accuracy;
+  private BigDecimal latitude;
+  private BigDecimal longitude;
+  private BigDecimal accuracy;
   private Date timestamp;
+
+  /** default */
+  public Location() {
+    this.latitude = BigDecimal.valueOf(0D);
+    this.longitude = BigDecimal.valueOf(0D);
+    this.accuracy = BigDecimal.valueOf(0D);
+    this.timestamp = new Date(0);
+  }
+  /**
+   * Takes a lead and fetches the location
+   *
+   * @param OxygenLead
+   */
+  public Location(OxygenLead oxygenLead) {
+    this.latitude = oxygenLead.getLocationLat();
+    this.longitude = oxygenLead.getLocationLon();
+    this.accuracy = oxygenLead.getLocationAcu();
+    this.timestamp = oxygenLead.getLocationTimestamp();
+  }
 
   /**
    * Default setter for timestmap
