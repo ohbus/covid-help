@@ -1,0 +1,40 @@
+package xyz.subho.covidhelp.config;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.accept.ContentNegotiationManager;
+import xyz.subho.covidhelp.security.ApplicationOAuth2UserService;
+import xyz.subho.covidhelp.service.impl.UserServiceImpl;
+
+@ContextConfiguration(classes = {SecurityConfig.class, HttpSecurity.class})
+@ExtendWith(SpringExtension.class)
+public class SecurityConfigTest {
+    @MockBean
+    private ApplicationOAuth2UserService applicationOAuth2UserService;
+
+    @MockBean
+    private ContentNegotiationManager contentNegotiationManager;
+
+    @Autowired
+    private HttpSecurity httpSecurity;
+
+    @Autowired
+    private SecurityConfig securityConfig;
+
+    @MockBean
+    private UserServiceImpl userServiceImpl;
+
+    @Test
+    public void testConfigure() throws Exception {
+        // TODO: This test is incomplete.
+        //  No meaningful assertions found.
+
+        this.securityConfig.configure(this.httpSecurity);
+    }
+}
+
