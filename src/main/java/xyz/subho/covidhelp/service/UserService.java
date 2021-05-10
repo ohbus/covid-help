@@ -23,4 +23,16 @@
 
 package xyz.subho.covidhelp.service;
 
-public interface UserService {}
+import xyz.subho.covidhelp.entity.User;
+import xyz.subho.covidhelp.security.ApplicationOAuth2User;
+
+public interface UserService {
+
+  public User getUserByEmailId(String emailId);
+
+  public boolean isUserEnabled(Long id);
+
+  public boolean isUserEnabled(User user);
+
+  public void processOAuthPostLogin(ApplicationOAuth2User oauthUser);
+}

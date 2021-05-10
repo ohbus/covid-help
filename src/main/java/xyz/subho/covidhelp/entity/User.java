@@ -23,40 +23,78 @@
 
 package xyz.subho.covidhelp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import xyz.subho.covidhelp.security.Authority;
+import xyz.subho.covidhelp.security.Provider;
+import xyz.subho.covidhelp.security.UserRole;
 
 @Entity
 @Data
 @AllArgsConstructor
-public class User {
+public class User implements UserDetails {
+
+  private static final long serialVersionUID = 1366143551256180947L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id")
+  @Column(name = "userId", nullable = false, updatable = false)
   private Long userId;
 
+  @Column(nullable = false)
   private String name;
+
+  @Column(nullable = false, unique = true)
   private String contactNo;
+
+  @Column(nullable = false, unique = true)
   private String emailId;
+
+  private String password;
+
+  @Enumerated(EnumType.STRING)
+  private Provider provider;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @JsonIgnore
+  private Set<UserRole> userRoles;
+
+  private boolean enabled;
 
   private String currentIp;
   private Date currentLogin;
+  private String currentLocation;
   private String lastIp;
   private Date lastLogin;
+  private String lastLocation;
 
-  /** Default Constructor */
+  // Default Constructor
   public User() {
     this.userId = 0L;
     this.name = "";
     this.contactNo = "";
     this.emailId = "";
+    this.password = "";
+    this.provider = Provider.UNAVAILABLE;
+    this.userRoles = new HashSet<>();
+    this.enabled = false;
     this.currentIp = "";
     this.currentLogin = new Date(0);
     this.lastIp = "";
@@ -67,22 +105,88 @@ public class User {
    * @param name
    * @param contactNo
    * @param emailId
-   * @param lastIp
-   * @param lastLogin
-   * @param oxygenLeadsList
+   * @param password
+   * @param currentIp
+   * @param currentLocation
    */
-  public User(String name, String contactNo, String emailId, String lastIp, Date lastLogin) {
+  public User(
+      String name,
+      String contactNo,
+      String emailId,
+      String password,
+      String currentIp,
+      String currentLocation) {
+    this(name, contactNo, emailId, password);
+    updateLogin(currentIp, currentLocation);
+  }
+
+  /**
+   * @param name
+   * @param contactNo
+   * @param emailId
+   * @param password
+   */
+  public User(String name, String contactNo, String emailId, String password) {
     this.name = name;
     this.contactNo = contactNo;
     this.emailId = emailId;
-    this.lastIp = lastIp;
-    this.lastLogin = lastLogin;
+    this.password = password;
   }
 
-  public void updateLastLogin(String currentIp) {
+  /**
+   * @param currentIp
+   * @param currentLocation
+   */
+  public void updateLogin(String currentIp, String currentLocation) {
     this.lastLogin = this.currentLogin;
     this.lastIp = this.currentIp;
+    this.lastLocation = this.currentLocation;
     this.currentLogin = new Date(System.currentTimeMillis());
     this.currentIp = currentIp;
+    this.currentLocation = currentLocation;
+  }
+
+  public void enableUser() {
+    this.enabled = true;
+  }
+
+  public void disableUser() {
+    this.enabled = false;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    Set<GrantedAuthority> authorities = new HashSet<>();
+    userRoles.forEach(userRole -> authorities.add(new Authority(userRole.getRole().getName())));
+    return authorities;
+  }
+
+  @Override
+  public String getUsername() {
+    // Auto-generated method stub
+    return this.emailId;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    // Not implemented
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    // Not implemented
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return this.enabled;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    // Not implemented
+    return true;
   }
 }

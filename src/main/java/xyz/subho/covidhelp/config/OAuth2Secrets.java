@@ -21,14 +21,35 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.repository;
+package xyz.subho.covidhelp.config;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import xyz.subho.covidhelp.entity.User;
+import org.springframework.beans.factory.annotation.Value;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public class OAuth2Secrets {
 
-  public User findByEmailId(String emailId);
+  @Value("spring.security.oauth2.client.registration.google.client-id")
+  private String googleCleintId;
+
+  @Value("spring.security.oauth2.client.registration.google.client-secret")
+  private String googleClientSecret;
+
+  /** @return the googleCleintId */
+  protected final String getGoogleCleintId() {
+    return googleCleintId;
+  }
+
+  /** @param googleCleintId the googleCleintId to set */
+  protected final void setGoogleCleintId(String googleCleintId) {
+    this.googleCleintId = googleCleintId;
+  }
+
+  /** @return the googleClientSecret */
+  protected final String getGoogleClientSecret() {
+    return googleClientSecret;
+  }
+
+  /** @param googleClientSecret the googleClientSecret to set */
+  protected final void setGoogleClientSecret(String googleClientSecret) {
+    this.googleClientSecret = googleClientSecret;
+  }
 }

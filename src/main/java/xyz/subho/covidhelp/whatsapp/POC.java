@@ -21,14 +21,6 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.repository;
+package xyz.subho.covidhelp.whatsapp;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import xyz.subho.covidhelp.entity.User;
-
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-
-  public User findByEmailId(String emailId);
-}
+public class POC {}

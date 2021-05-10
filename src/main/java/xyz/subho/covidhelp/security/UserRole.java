@@ -21,14 +21,51 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.repository;
+package xyz.subho.covidhelp.security;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import xyz.subho.covidhelp.entity.User;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+@Entity
+@Data
+@AllArgsConstructor
+@Table(name = "user_role")
+public class UserRole {
 
-  public User findByEmailId(String emailId);
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long userRoleId;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "userId")
+  private User user;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "roleId")
+  private Role role;
+
+  // Default Constructor
+  public UserRole() {
+    this.userRoleId = 0L;
+    this.user = new User();
+    this.role = new Role();
+  }
+
+  /**
+   * @param user
+   * @param role
+   */
+  public UserRole(User user, Role role) {
+    this.user = user;
+    this.role = role;
+  }
 }

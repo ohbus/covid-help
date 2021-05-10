@@ -58,12 +58,46 @@ public class Location {
   }
 
   /**
+   * @param Sting(locationString) in DB format
+   * @return Location()
+   */
+  public Location covertUserLocationFromDB(String locationString) {
+    String[] splitLocationString = locationString.trim().split(",");
+    var location = new Location();
+    location.setLatitude(BigDecimal.valueOf(Double.valueOf(splitLocationString[0])));
+    location.setLongitude(BigDecimal.valueOf(Double.valueOf(splitLocationString[1])));
+    location.setAccuracy(BigDecimal.valueOf(Double.valueOf(splitLocationString[2])));
+    location.setTimestamp(new Date(Long.valueOf(splitLocationString[3])));
+    return location;
+  }
+
+  /**
+   * @param location
+   * @return String(locationString) in DB format
+   */
+  public String covertUserLocationToDB(Location location) {
+    return ""
+        + location.getLatitude().toString()
+        + location.getLongitude().toString()
+        + location.getAccuracy().toString()
+        + convertDateToMilSecForDB(location.getTimestamp());
+  }
+
+  /**
    * Default setter for timestmap
    *
    * @param Date
    */
   public void setTimestamp(Date date) {
     this.timestamp = date;
+  }
+
+  /**
+   * @param date
+   * @return String(locationString) in DB format
+   */
+  public String convertDateToMilSecForDB(Date date) {
+    return Long.toString(date.getTime());
   }
 
   /** This method overloads so that we can automatically generate the timestamp from System Time */

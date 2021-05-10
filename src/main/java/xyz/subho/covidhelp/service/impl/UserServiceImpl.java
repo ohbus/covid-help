@@ -23,6 +23,46 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import xyz.subho.covidhelp.entity.User;
+import xyz.subho.covidhelp.repository.UserRepository;
+import xyz.subho.covidhelp.security.ApplicationOAuth2User;
+import xyz.subho.covidhelp.security.Provider;
 import xyz.subho.covidhelp.service.UserService;
 
-public class UserServiceImpl implements UserService {}
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+  @Autowired private UserRepository userRepository;
+
+  @Override
+  public User getUserByEmailId(String emailId) {
+    return userRepository.findByEmailId(emailId);
+  }
+
+  @Override
+  public boolean isUserEnabled(Long id) {
+    var findUser = userRepository.findById(id);
+    var status = false;
+    if (findUser.isPresent()) status = findUser.get().isEnabled();
+    return status;
+  }
+
+  @Override
+  public boolean isUserEnabled(User user) {
+    return isUserEnabled(user.getUserId());
+  }
+
+  @Override
+  public void processOAuthPostLogin(ApplicationOAuth2User oauthUser) {
+    var user = new User();
+    user.enableUser();
+    user.setProvider(Provider.GOOGLE);
+    user.setName(oauthUser.getName());
+    user.setEmailId(oauthUser.getEmail());
+    userRepository.save(user);
+  }
+}

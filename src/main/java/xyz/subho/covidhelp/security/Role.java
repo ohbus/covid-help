@@ -21,14 +21,46 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.repository;
+package xyz.subho.covidhelp.security;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import xyz.subho.covidhelp.entity.User;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+@Entity
+@Data
+@AllArgsConstructor
+public class Role {
 
-  public User findByEmailId(String emailId);
+  @Id
+  @Column(name = "roleId", nullable = false, updatable = false)
+  private Integer roleId;
+
+  private String name;
+
+  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<UserRole> userRoles;
+
+  // Default Constructor
+  public Role() {
+    this.roleId = 0;
+    this.name = "";
+    this.userRoles = new HashSet<>();
+  }
+
+  /**
+   * @param name
+   * @param userRoles
+   */
+  public Role(String name, Set<UserRole> userRoles) {
+    this.name = name;
+    this.userRoles = userRoles;
+  }
 }

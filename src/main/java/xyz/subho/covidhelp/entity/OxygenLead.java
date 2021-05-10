@@ -67,11 +67,11 @@ public class OxygenLead {
     this.locationLat = BigDecimal.valueOf(0D);
     this.locationLon = BigDecimal.valueOf(0D);
     this.locationAcu = BigDecimal.valueOf(0D);
-    this.locationTimestamp = null;
+    this.locationTimestamp = new Date(0);
     this.locationUrl = "";
-    this.lastVerifiedAt = null;
+    this.lastVerifiedAt = new Date(0);
     this.verifiedCount = 0;
-    this.lastUnavailableAt = null;
+    this.lastUnavailableAt = new Date(0);
     this.unavailableCount = 0;
   }
 

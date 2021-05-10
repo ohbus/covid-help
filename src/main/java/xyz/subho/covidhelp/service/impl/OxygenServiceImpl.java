@@ -23,6 +23,10 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import xyz.subho.covidhelp.service.OxygenService;
 
+@Service
+@Transactional
 public class OxygenServiceImpl implements OxygenService {}

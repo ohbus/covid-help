@@ -21,14 +21,27 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.repository;
+package xyz.subho.covidhelp.security;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import xyz.subho.covidhelp.entity.User;
+import org.springframework.security.core.GrantedAuthority;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public class Authority implements GrantedAuthority {
 
-  public User findByEmailId(String emailId);
+  private static final long serialVersionUID = -4220988660369947639L;
+  private final String authority;
+
+  public Authority() {
+    super();
+    this.authority = "";
+  }
+
+  /** @param authority */
+  public Authority(String authority) {
+    this.authority = authority;
+  }
+
+  @Override
+  public String getAuthority() {
+    return authority;
+  }
 }

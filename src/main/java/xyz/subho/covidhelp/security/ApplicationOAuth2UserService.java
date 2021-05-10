@@ -21,14 +21,24 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp.repository;
+package xyz.subho.covidhelp.security;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import xyz.subho.covidhelp.entity.User;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Service;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+@Service
+@Slf4j
+public class ApplicationOAuth2UserService extends DefaultOAuth2UserService {
 
-  public User findByEmailId(String emailId);
+  @Override
+  public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+    log.trace("OAuth2UserRequest: ", userRequest);
+    var user = super.loadUser(userRequest);
+    log.trace("OAuth2User: ", user);
+    return new ApplicationOAuth2User(user);
+  }
 }
