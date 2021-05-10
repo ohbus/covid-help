@@ -24,7 +24,9 @@
 package xyz.subho.covidhelp.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class OAuth2Secrets {
 
   @Value("spring.security.oauth2.client.registration.google.client-id")

@@ -24,25 +24,16 @@
 package xyz.subho.covidhelp.config;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import xyz.subho.covidhelp.security.ApplicationOAuth2User;
 import xyz.subho.covidhelp.security.ApplicationOAuth2UserService;
 import xyz.subho.covidhelp.service.UserService;
@@ -56,8 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private UserService userService;
 
-  @Autowired private OAuth2Secrets auth2Secrets;
-
   private static final String[] PUBLIC_MATCHERS = {
     "/webjars/**",
     "/css/**",
@@ -65,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     "/images/**",
     "/oauth/**",
     "/",
-    "/login",
+    "/login/**",
     "/about/**",
     "/contact/**",
     "/tos",
@@ -84,10 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated()
         .and()
-        .oauth2Login()
-        .loginPage("/login")
-        .userInfoEndpoint()
-        .userService(oauthUserService);
+        .oauth2Login();
   }
 
   public void onAuthenticationSuccess(
@@ -98,28 +84,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     userService.processOAuthPostLogin(oauthUser);
 
     response.sendRedirect("/dashboard");
-  }
-
-  @Bean
-  public ClientRegistrationRepository clientRegistrationRepository() {
-    List<ClientRegistration> registrations = new ArrayList<>();
-    registrations.add(googleClientRegistration());
-    return new InMemoryClientRegistrationRepository(registrations);
-  }
-
-  private ClientRegistration googleClientRegistration() {
-    return ClientRegistration.withRegistrationId("google")
-        .clientId(auth2Secrets.getGoogleCleintId())
-        .clientSecret(auth2Secrets.getGoogleClientSecret())
-        .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
-        .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-        .scope("openid", "profile", "email")
-        .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-        .tokenUri("https://www.googleapis.com/oauth2/v4/token")
-        .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-        .userNameAttributeName(IdTokenClaimNames.SUB)
-        .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-        .clientName("Google")
-        .build();
   }
 }

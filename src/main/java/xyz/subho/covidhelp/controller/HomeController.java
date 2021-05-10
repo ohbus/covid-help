@@ -42,4 +42,10 @@ public class HomeController {
     log.info("CAME at userFront");
     return "userFront.html";
   }
+
+  @GetMapping("/dashboard")
+  public String dashboard() {
+    log.info("CAME at DASHBOARD");
+    return "dashboard.html";
+  }
 }
