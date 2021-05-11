@@ -14,27 +14,21 @@ import xyz.subho.covidhelp.service.impl.UserServiceImpl;
 @ContextConfiguration(classes = {SecurityConfig.class, HttpSecurity.class})
 @ExtendWith(SpringExtension.class)
 public class SecurityConfigTest {
-    @MockBean
-    private ApplicationOAuth2UserService applicationOAuth2UserService;
+  @MockBean private ApplicationOAuth2UserService applicationOAuth2UserService;
 
-    @MockBean
-    private ContentNegotiationManager contentNegotiationManager;
+  @MockBean private ContentNegotiationManager contentNegotiationManager;
 
-    @Autowired
-    private HttpSecurity httpSecurity;
+  @Autowired private HttpSecurity httpSecurity;
 
-    @Autowired
-    private SecurityConfig securityConfig;
+  @Autowired private SecurityConfig securityConfig;
 
-    @MockBean
-    private UserServiceImpl userServiceImpl;
+  @MockBean private UserServiceImpl userServiceImpl;
 
-    @Test
-    public void testConfigure() throws Exception {
-        // TODO: This test is incomplete.
-        //  No meaningful assertions found.
+  @Test
+  public void testConfigure() throws Exception {
+    // TODO: This test is incomplete.
+    //  No meaningful assertions found.
 
-        this.securityConfig.configure(this.httpSecurity);
-    }
+    this.securityConfig.configure(this.httpSecurity);
+  }
 }
-
