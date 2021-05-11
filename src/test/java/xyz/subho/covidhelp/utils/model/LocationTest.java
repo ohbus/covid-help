@@ -3,6 +3,7 @@ package xyz.subho.covidhelp.utils.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -50,13 +51,13 @@ public class LocationTest {
 
   @Test
   public void testCovertUserLocationFromDB() {
-    // TODO: This test is incomplete.
-    //   Reason: No meaningful assertions found.
-    //   To help Diffblue Cover to find assertions, please add getters to the
-    //   class under test that return fields written by the method under test.
-    //   See https://diff.blue/R004
-
-    (new Location()).covertUserLocationFromDB("Location String");
+   
+	  var location = new Location();
+	    location.setLatitude(BigDecimal.valueOf(Double.valueOf("22.6105")));
+	    location.setLongitude(BigDecimal.valueOf(Double.valueOf("88.4325")));
+	    location.setAccuracy(BigDecimal.valueOf(Double.valueOf("20054")));
+	    location.setTimestamp(new Date(Long.valueOf("1620752468293")));
+    assertEquals((new Location()).covertUserLocationFromDB("22.6105,88.4325,20054,1620752468293"),location);
   }
 
   @Test

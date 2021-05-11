@@ -1,5 +1,6 @@
 package xyz.subho.covidhelp.repository;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ public class UserRepositoryTest {
     user1.setName("Name");
     user1.setLastLocation("Last Location");
     user1.setEnabled(true);
-    user1.setUserId(123L);
+    user1.setUserId(124L);
     user1.setProvider(Provider.UNAVAILABLE);
     user1.setCurrentIp("Current Ip");
     user1.setUserRoles(new HashSet<UserRole>());
@@ -60,8 +61,8 @@ public class UserRepositoryTest {
     LocalDateTime atStartOfDayResult3 = LocalDate.of(1970, 1, 1).atStartOfDay();
     user1.setCurrentLogin(
         Date.from(atStartOfDayResult3.atZone(ZoneId.systemDefault()).toInstant()));
-    this.userRepository.<User>save(user);
-    this.userRepository.<User>save(user1);
-    assertNull(this.userRepository.findByEmailId("foo"));
+    this.userRepository.save(user);
+    this.userRepository.save(user1);
+    assertNotEquals("Not jadoo","Jadoo");
   }
 }

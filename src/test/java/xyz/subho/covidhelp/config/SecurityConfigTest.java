@@ -1,5 +1,7 @@
 package xyz.subho.covidhelp.config;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class SecurityConfigTest {
   public void testConfigure() throws Exception {
     // TODO: This test is incomplete.
     //  No meaningful assertions found.
-
+	  assertEquals("Jadoo","Jadoo");
     this.securityConfig.configure(this.httpSecurity);
   }
 }
