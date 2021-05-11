@@ -62,9 +62,12 @@ public class UserServiceImpl implements UserService {
   public void processOAuthPostLogin(Map<String, String> oauthUserAttributes) {
     var user = new User();
     user.enableUser();
-    user.setProvider(Provider.GOOGLE);
-    user.setName("");
-    user.setEmailId("");
+    user.setProvider(
+        oauthUserAttributes.get("provider").equalsIgnoreCase(Provider.GOOGLE.toString())
+            ? Provider.GOOGLE
+            : Provider.UNAVAILABLE);
+    user.setName(oauthUserAttributes.get("name"));
+    user.setEmailId(oauthUserAttributes.get("email"));
     log.info("saving OAuth User: ", user.toString());
     userRepository.save(user);
   }
