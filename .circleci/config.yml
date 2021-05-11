@@ -43,7 +43,7 @@ jobs:
         echo ${CI_PULL_REQUEST}
 
     - run: |
-        if [ -n "${CIRCLE_PR_NUMBER}" ] || [ -z "${CIRCLE_PULL_REQUEST}"  ]; then
+        if [ -n "${CIRCLE_PR_NUMBER}" ] || [ -n "${CIRCLE_PULL_REQUEST##*/}"  ]; then
           MAVEN_OPTS="-Xmx3000m" xvfb-run ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
              -Dsonar.pullrequest.key=${CIRCLE_PR_NUMBER} \
              -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
