@@ -68,6 +68,8 @@ public class User implements UserDetails {
   private String emailId;
 
   private String password;
+  private String pictureUrl;
+  
 
   @Enumerated(EnumType.STRING)
   private Provider provider;
@@ -92,6 +94,7 @@ public class User implements UserDetails {
     this.contactNo = "";
     this.emailId = "";
     this.password = "";
+    this.pictureUrl = "https://nwsid.net/wp-content/uploads/2015/05/dummy-profile-pic.png";
     this.provider = Provider.UNAVAILABLE;
     this.userRoles = new HashSet<>();
     this.enabled = false;
