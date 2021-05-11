@@ -30,7 +30,7 @@ public class SecurityConfigTest {
   public void testConfigure() throws Exception {
     // TODO: This test is incomplete.
     //  No meaningful assertions found.
-	  assertEquals("Jadoo","Jadoo");
+    assertEquals("Jadoo", "Jadoo");
     this.securityConfig.configure(this.httpSecurity);
   }
 }

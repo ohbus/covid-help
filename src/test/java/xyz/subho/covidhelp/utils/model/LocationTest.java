@@ -51,13 +51,14 @@ public class LocationTest {
 
   @Test
   public void testCovertUserLocationFromDB() {
-   
-	  var location = new Location();
-	    location.setLatitude(BigDecimal.valueOf(Double.valueOf("22.6105")));
-	    location.setLongitude(BigDecimal.valueOf(Double.valueOf("88.4325")));
-	    location.setAccuracy(BigDecimal.valueOf(Double.valueOf("20054")));
-	    location.setTimestamp(new Date(Long.valueOf("1620752468293")));
-    assertEquals((new Location()).covertUserLocationFromDB("22.6105,88.4325,20054,1620752468293"),location);
+
+    var location = new Location();
+    location.setLatitude(BigDecimal.valueOf(Double.valueOf("22.6105")));
+    location.setLongitude(BigDecimal.valueOf(Double.valueOf("88.4325")));
+    location.setAccuracy(BigDecimal.valueOf(Double.valueOf("20054")));
+    location.setTimestamp(new Date(Long.valueOf("1620752468293")));
+    assertEquals(
+        (new Location()).covertUserLocationFromDB("22.6105,88.4325,20054,1620752468293"), location);
   }
 
   @Test

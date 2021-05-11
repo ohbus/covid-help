@@ -1,21 +1,20 @@
 package xyz.subho.covidhelp.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
 public class ProviderTest {
   @Test
   public void testValueOf() {
-   
-	  assertEquals(Provider.valueOf("UNAVAILABLE"), Provider.UNAVAILABLE);
+
+    assertEquals(Provider.valueOf("UNAVAILABLE"), Provider.UNAVAILABLE);
   }
 
   @Test
   public void testValueOf2() {
-    
-	assertEquals(Provider.valueOf("GOOGLE"), Provider.GOOGLE);
+
+    assertEquals(Provider.valueOf("GOOGLE"), Provider.GOOGLE);
   }
 
   @Test
