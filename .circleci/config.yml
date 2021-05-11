@@ -35,12 +35,6 @@ jobs:
     
     - restore_cache:
         key: covid-help-sonar-pr-{{ checksum "pom.xml" }}
-    
-    - run: |
-        echo ${CIRCLE_PULL_REQUEST##*/}
-        echo ${CIRCLE_PULL_REQUEST}
-        echo ${CIRCLE_PR_NUMBER}
-        echo ${CI_PULL_REQUEST}
 
     - run: |
         if [ -n "${CIRCLE_PR_NUMBER}" ]; then
