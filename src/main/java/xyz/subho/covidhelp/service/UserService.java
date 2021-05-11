@@ -23,10 +23,8 @@
 
 package xyz.subho.covidhelp.service;
 
-import java.security.Principal;
-
+import java.util.Map;
 import xyz.subho.covidhelp.entity.User;
-import xyz.subho.covidhelp.security.ApplicationOAuth2User;
 
 public interface UserService {
 
@@ -36,5 +34,5 @@ public interface UserService {
 
   public boolean isUserEnabled(User user);
 
-  public void processOAuthPostLogin(ApplicationOAuth2User oauthUser);
+  public void processOAuthPostLogin(Map<String, String> authUserAtributes);
 }

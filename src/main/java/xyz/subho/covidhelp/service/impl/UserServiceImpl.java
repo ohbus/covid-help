@@ -23,13 +23,13 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.subho.covidhelp.entity.User;
 import xyz.subho.covidhelp.repository.UserRepository;
-import xyz.subho.covidhelp.security.ApplicationOAuth2User;
 import xyz.subho.covidhelp.security.Provider;
 import xyz.subho.covidhelp.service.UserService;
 
@@ -59,12 +59,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void processOAuthPostLogin(ApplicationOAuth2User oauthUser) {
+  public void processOAuthPostLogin(Map<String, String> oauthUserAttributes) {
     var user = new User();
     user.enableUser();
     user.setProvider(Provider.GOOGLE);
-    user.setName(oauthUser.getName());
-    user.setEmailId(oauthUser.getEmail());
+    user.setName("");
+    user.setEmailId("");
     log.info("saving OAuth User: ", user.toString());
     userRepository.save(user);
   }
