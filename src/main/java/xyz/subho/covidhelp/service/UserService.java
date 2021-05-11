@@ -23,6 +23,8 @@
 
 package xyz.subho.covidhelp.service;
 
+import java.security.Principal;
+
 import xyz.subho.covidhelp.entity.User;
 import xyz.subho.covidhelp.security.ApplicationOAuth2User;
 

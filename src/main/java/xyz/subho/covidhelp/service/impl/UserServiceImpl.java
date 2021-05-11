@@ -23,6 +23,7 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ import xyz.subho.covidhelp.service.UserService;
 
 @Service
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   @Autowired private UserRepository userRepository;
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
     user.setProvider(Provider.GOOGLE);
     user.setName(oauthUser.getName());
     user.setEmailId(oauthUser.getEmail());
+    log.info("saving OAuth User: ", user.toString());
     userRepository.save(user);
   }
 }
