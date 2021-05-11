@@ -7,18 +7,14 @@ import org.junit.jupiter.api.Test;
 public class ProviderTest {
   @Test
   public void testValueOf() {
-    // TODO: This test is incomplete.
-    //  No meaningful assertions found.
 
-    Provider.valueOf("Name");
+    assertEquals(Provider.valueOf("UNAVAILABLE"), Provider.UNAVAILABLE);
   }
 
   @Test
   public void testValueOf2() {
-    // TODO: This test is incomplete.
-    //  No meaningful assertions found.
 
-    Provider.valueOf("foo");
+    assertEquals(Provider.valueOf("GOOGLE"), Provider.GOOGLE);
   }
 
   @Test
