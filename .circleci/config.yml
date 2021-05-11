@@ -43,9 +43,19 @@ jobs:
         echo ${CI_PULL_REQUEST}
 
     - run: |
-        if [ -n "${CIRCLE_PR_NUMBER}" ] || [ -n "${CIRCLE_PULL_REQUEST##*/}"  ]; then
+        if [ -n "${CIRCLE_PR_NUMBER}" ]; then
           MAVEN_OPTS="-Xmx3000m" ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
              -Dsonar.pullrequest.key=${CIRCLE_PR_NUMBER} \
+             -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
+             -Dsonar.pullrequest.base=master
+        else
+          echo "No Sonar PR analysis as this is not a forked pull request"
+        fi
+
+    - run: |
+        if [ -n "${CIRCLE_PULL_REQUEST##*/}"  ]; then
+          MAVEN_OPTS="-Xmx3000m" ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+             -Dsonar.pullrequest.key=${CIRCLE_PULL_REQUEST##*/} \
              -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
              -Dsonar.pullrequest.base=master
         else
