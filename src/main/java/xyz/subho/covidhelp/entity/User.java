@@ -69,7 +69,6 @@ public class User implements UserDetails {
 
   private String password;
   private String pictureUrl;
-  
 
   @Enumerated(EnumType.STRING)
   private Provider provider;

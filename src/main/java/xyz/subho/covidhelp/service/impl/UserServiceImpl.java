@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
             : Provider.UNAVAILABLE);
     user.setName(oauthUserAttributes.get("name"));
     user.setEmailId(oauthUserAttributes.get("email"));
-    log.info("saving OAuth User: "+ user.toString());
+    log.info("saving OAuth User: " + user.toString());
     userRepository.save(user);
   }
 }
