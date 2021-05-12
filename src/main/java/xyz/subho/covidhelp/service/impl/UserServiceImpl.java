@@ -23,6 +23,7 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import java.math.BigInteger;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,11 @@ public class UserServiceImpl implements UserService {
             : Provider.UNAVAILABLE);
     user.setName(oauthUserAttributes.get("name"));
     user.setEmailId(oauthUserAttributes.get("email"));
+    user.setPictureUrl(oauthUserAttributes.get("picture"));
+    user.setGivenName(oauthUserAttributes.get("given_name"));
+    user.setFamilyName(oauthUserAttributes.get("family_name"));
+    user.setOAuthUserId(new BigInteger(oauthUserAttributes.get("oAuthUserId")));
+    user.setLocale(oauthUserAttributes.get("locale"));
     log.info("saving OAuth User: " + user.toString());
     userRepository.save(user);
   }

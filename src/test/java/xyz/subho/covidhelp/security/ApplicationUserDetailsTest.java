@@ -20,7 +20,7 @@ public class ApplicationUserDetailsTest {
 
   @Test
   public void testGetAuthorities2() {
-    User user = new User("Name", "Contact No", "42", "iloveyou");
+    User user = new User("Name", "Contact No", "42");
     user.setUserRoles(new HashSet<UserRole>());
     assertTrue((new ApplicationUserDetails(user)).getAuthorities().isEmpty());
   }
@@ -83,7 +83,7 @@ public class ApplicationUserDetailsTest {
     HashSet<UserRole> userRoleSet = new HashSet<UserRole>();
     userRoleSet.add(userRole);
 
-    User user1 = new User("Name", "Contact No", "42", "iloveyou");
+    User user1 = new User("Name", "Contact No", "42");
     user1.setUserRoles(userRoleSet);
     assertEquals(1, (new ApplicationUserDetails(user1)).getAuthorities().size());
   }
@@ -165,6 +165,11 @@ public class ApplicationUserDetailsTest {
                     "Contact No",
                     "42",
                     "iloveyou",
+                    "picture",
+                    "First Name",
+                    "Family",
+                    "en",
+                    null,
                     Provider.UNAVAILABLE,
                     userRoles,
                     true,

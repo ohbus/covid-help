@@ -106,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 if (authentication.getPrincipal() instanceof OAuth2User) {
                   var auth2User = (OAuth2User) authentication.getPrincipal();
-                  oAuth2Attributes.put("username", auth2User.getName());
+                  oAuth2Attributes.put("oAuthUserId", auth2User.getName());
                   oAuth2Attributes.put("name", auth2User.getAttribute("name"));
                   oAuth2Attributes.put("email", auth2User.getAttribute("email"));
                   oAuth2Attributes.put("given_name", auth2User.getAttribute("given_name"));
