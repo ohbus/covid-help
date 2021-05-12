@@ -41,7 +41,8 @@ jobs:
           MAVEN_OPTS="-Xmx3000m" ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
              -Dsonar.pullrequest.key=${CIRCLE_PR_NUMBER} \
              -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
-             -Dsonar.pullrequest.base=master
+             -Dsonar.pullrequest.base=master \
+             -Dmaven.test.failure.ignore=true
         else
           echo "No Sonar PR analysis as this is not a forked pull request"
         fi
@@ -51,7 +52,8 @@ jobs:
           MAVEN_OPTS="-Xmx3000m" ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
              -Dsonar.pullrequest.key=${CIRCLE_PULL_REQUEST##*/} \
              -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
-             -Dsonar.pullrequest.base=master
+             -Dsonar.pullrequest.base=master \
+             -Dmaven.test.failure.ignore=true
         else
           echo "No Sonar PR analysis as this is not a pull request"
         fi

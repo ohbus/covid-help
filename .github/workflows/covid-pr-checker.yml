@@ -58,7 +58,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       
       - name: Build Code
-        run: ./mvnw -B clean verify 
+        run: ./mvnw -B clean verify -Dmaven.test.failure.ignore=true
   
   
   check-pr-code-formatting:
