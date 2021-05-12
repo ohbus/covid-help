@@ -31,12 +31,8 @@ jobs:
   check-compilation:
 
     needs: check-code-formatting
-
-    strategy:
-      matrix:
-        platform: [ ubuntu-latest , macos-latest , windows-latest ]
-    
-    runs-on: ${{ matrix.platform }}
+        
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout Code

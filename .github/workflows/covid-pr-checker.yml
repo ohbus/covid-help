@@ -33,12 +33,8 @@ jobs:
   check-pr-compilation:
 
     needs: check-pr-code-formatting
-
-    strategy:
-      matrix:
-        platform: [ ubuntu-latest , macos-latest , windows-latest ]
-    
-    runs-on: ${{ matrix.platform }}
+        
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout Code
