@@ -18,7 +18,7 @@ import xyz.subho.covidhelp.security.UserRole;
 public class UserTest {
   @Test
   public void testConstructor() {
-    User actualUser = new User("Name", "Contact No", "42", "iloveyou");
+    User actualUser = new User("Name", "Contact No", "42");
     assertEquals("42", actualUser.getUsername());
     assertTrue(actualUser.isAccountNonExpired());
     assertTrue(actualUser.isAccountNonLocked());
@@ -47,8 +47,7 @@ public class UserTest {
 
   @Test
   public void testConstructor3() {
-    User actualUser =
-        new User("Name", "Contact No", "42", "iloveyou", "Current Ip", "Current Location");
+    User actualUser = new User("Name", "Contact No", "42", "Current Ip", "Current Location");
     assertEquals("Contact No", actualUser.getContactNo());
     assertEquals("42", actualUser.getUsername());
     assertEquals("iloveyou", actualUser.getPassword());
@@ -77,7 +76,7 @@ public class UserTest {
 
   @Test
   public void testGetAuthorities2() {
-    User user = new User("Name", "Contact No", "42", "iloveyou");
+    User user = new User("Name", "Contact No", "42");
     user.setUserRoles(new HashSet<UserRole>());
     assertTrue(user.getAuthorities().isEmpty());
   }
@@ -115,7 +114,7 @@ public class UserTest {
     HashSet<UserRole> userRoleSet = new HashSet<UserRole>();
     userRoleSet.add(userRole);
 
-    User user1 = new User("Name", "Contact No", "42", "iloveyou");
+    User user1 = new User("Name", "Contact No", "42");
     user1.setUserRoles(userRoleSet);
     assertEquals(1, user1.getAuthorities().size());
   }

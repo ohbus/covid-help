@@ -1,12 +1,13 @@
 package xyz.subho.covidhelp.repository;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,6 +20,7 @@ import xyz.subho.covidhelp.security.UserRole;
 @ContextConfiguration(classes = {UserRepository.class})
 @EnableAutoConfiguration
 @DataJpaTest
+@Slf4j
 public class UserRepositoryTest {
   @Autowired private UserRepository userRepository;
 
@@ -41,6 +43,7 @@ public class UserRepositoryTest {
     user.setCurrentLocation("Current Location");
     LocalDateTime atStartOfDayResult1 = LocalDate.of(1970, 1, 1).atStartOfDay();
     user.setCurrentLogin(Date.from(atStartOfDayResult1.atZone(ZoneId.systemDefault()).toInstant()));
+    log.info("USER 1: " + user.toString());
 
     User user1 = new User();
     user1.setPassword("iloveyou");
@@ -60,8 +63,13 @@ public class UserRepositoryTest {
     LocalDateTime atStartOfDayResult3 = LocalDate.of(1970, 1, 1).atStartOfDay();
     user1.setCurrentLogin(
         Date.from(atStartOfDayResult3.atZone(ZoneId.systemDefault()).toInstant()));
+    log.info("USER 2: " + user1.toString());
+
+    log.info("SAVING USER 1 into DB");
     this.userRepository.save(user);
+    log.info("SAVING USER 2 into DB");
     this.userRepository.save(user1);
-    assertNotEquals("Not jadoo", "Jadoo");
+    log.info("Done Saving");
+    assertNull(this.userRepository.findByEmailId("42"));
   }
 }

@@ -23,17 +23,20 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import java.math.BigInteger;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.subho.covidhelp.entity.User;
 import xyz.subho.covidhelp.repository.UserRepository;
-import xyz.subho.covidhelp.security.ApplicationOAuth2User;
 import xyz.subho.covidhelp.security.Provider;
 import xyz.subho.covidhelp.service.UserService;
 
 @Service
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   @Autowired private UserRepository userRepository;
@@ -57,12 +60,21 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void processOAuthPostLogin(ApplicationOAuth2User oauthUser) {
+  public void processOAuthPostLogin(Map<String, String> oauthUserAttributes) {
     var user = new User();
     user.enableUser();
-    user.setProvider(Provider.GOOGLE);
-    user.setName(oauthUser.getName());
-    user.setEmailId(oauthUser.getEmail());
+    user.setProvider(
+        oauthUserAttributes.get("provider").equalsIgnoreCase(Provider.GOOGLE.toString())
+            ? Provider.GOOGLE
+            : Provider.UNAVAILABLE);
+    user.setName(oauthUserAttributes.get("name"));
+    user.setEmailId(oauthUserAttributes.get("email"));
+    user.setPictureUrl(oauthUserAttributes.get("picture"));
+    user.setGivenName(oauthUserAttributes.get("given_name"));
+    user.setFamilyName(oauthUserAttributes.get("family_name"));
+    user.setOAuthUserId(new BigInteger(oauthUserAttributes.get("oAuthUserId")));
+    user.setLocale(oauthUserAttributes.get("locale"));
+    log.info("saving OAuth User: " + user.toString());
     userRepository.save(user);
   }
 }

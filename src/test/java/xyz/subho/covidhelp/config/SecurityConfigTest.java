@@ -10,13 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.accept.ContentNegotiationManager;
-import xyz.subho.covidhelp.security.ApplicationOAuth2UserService;
 import xyz.subho.covidhelp.service.impl.UserServiceImpl;
 
 @ContextConfiguration(classes = {SecurityConfig.class, HttpSecurity.class})
 @ExtendWith(SpringExtension.class)
 public class SecurityConfigTest {
-  @MockBean private ApplicationOAuth2UserService applicationOAuth2UserService;
 
   @MockBean private ContentNegotiationManager contentNegotiationManager;
 

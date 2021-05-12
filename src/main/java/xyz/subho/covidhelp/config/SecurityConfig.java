@@ -24,9 +24,12 @@
 package xyz.subho.covidhelp.config;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -34,16 +37,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import xyz.subho.covidhelp.security.ApplicationOAuth2User;
-import xyz.subho.covidhelp.security.ApplicationOAuth2UserService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import xyz.subho.covidhelp.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-  @Autowired private ApplicationOAuth2UserService oauthUserService;
 
   @Autowired private UserService userService;
 
@@ -73,16 +76,62 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated()
         .and()
-        .oauth2Login();
-  }
+        .oauth2Login()
+        .userInfoEndpoint()
+        // .userService(oauthUserService)
+        .and()
+        .successHandler(
+            new AuthenticationSuccessHandler() {
 
-  public void onAuthenticationSuccess(
-      HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-      throws IOException, ServletException {
+              @Override
+              public void onAuthenticationSuccess(
+                  HttpServletRequest request,
+                  HttpServletResponse response,
+                  Authentication authentication)
+                  throws IOException, ServletException {
 
-    ApplicationOAuth2User oauthUser = (ApplicationOAuth2User) authentication.getPrincipal();
-    userService.processOAuthPostLogin(oauthUser);
+                log.info("AuthenticationSuccessHandler invoked");
 
-    response.sendRedirect("/dashboard");
+                Map<String, String> oAuth2Attributes = new HashMap<>();
+
+                if (authentication instanceof OAuth2AuthenticationToken) {
+                  var oAuth2Authentication = (OAuth2AuthenticationToken) authentication;
+                  oAuth2Attributes.put(
+                      "provider", oAuth2Authentication.getAuthorizedClientRegistrationId());
+                } else log.warn("Could NOT get RegistrationId");
+
+                log.info("Authentication NAME \t : " + authentication.getName());
+                log.info(
+                    "Authentication PRINCIPAL \t : " + authentication.getPrincipal().toString());
+
+                if (authentication.getPrincipal() instanceof OAuth2User) {
+                  var auth2User = (OAuth2User) authentication.getPrincipal();
+                  oAuth2Attributes.put("oAuthUserId", auth2User.getName());
+                  oAuth2Attributes.put("name", auth2User.getAttribute("name"));
+                  oAuth2Attributes.put("email", auth2User.getAttribute("email"));
+                  oAuth2Attributes.put("given_name", auth2User.getAttribute("given_name"));
+                  oAuth2Attributes.put("family_name", auth2User.getAttribute("family_name"));
+                  oAuth2Attributes.put("picture", auth2User.getAttribute("picture"));
+                  oAuth2Attributes.put("locale", auth2User.getAttribute("locale"));
+                } else log.warn("Could NOT get OAuth2User");
+
+                log.info("OAuth UserAttributes got from principal" + oAuth2Attributes.toString());
+                log.info("session {}" + request.getSession());
+
+                userService.processOAuthPostLogin(oAuth2Attributes);
+
+                log.info("Done SAVING into Database");
+
+                response.sendRedirect("/dashboard");
+              }
+            })
+        // .defaultSuccessUrl("/dashboard")
+        .and()
+        .logout()
+        .logoutSuccessUrl("/")
+        .permitAll()
+        .and()
+        .exceptionHandling()
+        .accessDeniedPage("/403");
   }
 }

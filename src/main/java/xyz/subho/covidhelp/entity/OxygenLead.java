@@ -30,12 +30,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
 @AllArgsConstructor
+@Table(name = "oxygen")
 public class OxygenLead {
 
   @Id
@@ -54,9 +56,9 @@ public class OxygenLead {
   private String locationUrl;
 
   private Date lastVerifiedAt;
-  private Integer verifiedCount;
+  private Long verifiedCount;
   private Date lastUnavailableAt;
-  private Integer unavailableCount;
+  private Long unavailableCount;
 
   /** Default Constructor */
   public OxygenLead() {
@@ -70,9 +72,9 @@ public class OxygenLead {
     this.locationTimestamp = new Date(0);
     this.locationUrl = "";
     this.lastVerifiedAt = new Date(0);
-    this.verifiedCount = 0;
+    this.verifiedCount = 0L;
     this.lastUnavailableAt = new Date(0);
-    this.unavailableCount = 0;
+    this.unavailableCount = 0L;
   }
 
   /**
@@ -99,9 +101,9 @@ public class OxygenLead {
       Date locationTimestamp,
       String locationUrl,
       Date lastVerifiedAt,
-      Integer verifiedCount,
+      Long verifiedCount,
       Date lastUnavailableAt,
-      Integer unavailableCount) {
+      Long unavailableCount) {
     this.oxyPropName = oxyPropName;
     this.oxyPropContactPrimary = oxyPropContactPrimary;
     this.oxyPropContactSecondary = oxyPropContactSecondary;

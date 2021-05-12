@@ -25,9 +25,9 @@ public class OxygenLeadTest {
             locationTimestamp,
             "https://example.org/example",
             lastVerifiedAt,
-            3,
+            3L,
             new Date(1L),
-            3);
+            3L);
     assertEquals(
         "OxygenLead(oxyLeadId=null, oxyPropName=Oxy Prop Name, oxyPropContactPrimary=Oxy Prop Contact Primary,"
             + " oxyPropContactSecondary=Oxy Prop Contact Secondary, locationLat=42, locationLon=42, locationAcu=42,"

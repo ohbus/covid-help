@@ -24,6 +24,7 @@
 package xyz.subho.covidhelp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -68,6 +69,11 @@ public class User implements UserDetails {
   private String emailId;
 
   private String password;
+  private String pictureUrl;
+  private String givenName;
+  private String familyName;
+  private String locale;
+  private BigInteger oAuthUserId;
 
   @Enumerated(EnumType.STRING)
   private Provider provider;
@@ -92,6 +98,11 @@ public class User implements UserDetails {
     this.contactNo = "";
     this.emailId = "";
     this.password = "";
+    this.pictureUrl = "https://nwsid.net/wp-content/uploads/2015/05/dummy-profile-pic.png";
+    this.givenName = "";
+    this.familyName = "";
+    this.locale = "";
+    this.oAuthUserId = BigInteger.valueOf(0L);
     this.provider = Provider.UNAVAILABLE;
     this.userRoles = new HashSet<>();
     this.enabled = false;
@@ -110,13 +121,8 @@ public class User implements UserDetails {
    * @param currentLocation
    */
   public User(
-      String name,
-      String contactNo,
-      String emailId,
-      String password,
-      String currentIp,
-      String currentLocation) {
-    this(name, contactNo, emailId, password);
+      String name, String contactNo, String emailId, String currentIp, String currentLocation) {
+    this(name, contactNo, emailId);
     updateLogin(currentIp, currentLocation);
   }
 
@@ -126,11 +132,10 @@ public class User implements UserDetails {
    * @param emailId
    * @param password
    */
-  public User(String name, String contactNo, String emailId, String password) {
+  public User(String name, String contactNo, String emailId) {
     this.name = name;
     this.contactNo = contactNo;
     this.emailId = emailId;
-    this.password = password;
   }
 
   /**
