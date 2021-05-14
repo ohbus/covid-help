@@ -62,19 +62,30 @@ public class UserServiceImpl implements UserService {
   @Override
   public void processOAuthPostLogin(Map<String, String> oauthUserAttributes) {
     var user = new User();
-    user.enableUser();
-    user.setProvider(
-        oauthUserAttributes.get("provider").equalsIgnoreCase(Provider.GOOGLE.toString())
-            ? Provider.GOOGLE
-            : Provider.UNAVAILABLE);
-    user.setName(oauthUserAttributes.get("name"));
-    user.setEmailId(oauthUserAttributes.get("email"));
-    user.setPictureUrl(oauthUserAttributes.get("picture"));
-    user.setGivenName(oauthUserAttributes.get("given_name"));
-    user.setFamilyName(oauthUserAttributes.get("family_name"));
-    user.setOAuthUserId(new BigInteger(oauthUserAttributes.get("oAuthUserId")));
-    user.setLocale(oauthUserAttributes.get("locale"));
-    log.info("saving OAuth User: " + user.toString());
-    userRepository.save(user);
+    var currentUserEmail = oauthUserAttributes.get("email");
+    try {
+      user = getUserByEmailId(currentUserEmail);
+      if (user.getEmailId().equals(currentUserEmail)) {
+        log.info("User Already exists");
+      } else {
+        user.enableUser();
+        user.setProvider(
+            oauthUserAttributes.get("provider").equalsIgnoreCase(Provider.GOOGLE.toString())
+                ? Provider.GOOGLE
+                : Provider.UNAVAILABLE);
+        user.setName(oauthUserAttributes.get("name"));
+        user.setEmailId(currentUserEmail);
+        user.setPictureUrl(oauthUserAttributes.get("picture"));
+        user.setGivenName(oauthUserAttributes.get("given_name"));
+        user.setFamilyName(oauthUserAttributes.get("family_name"));
+        user.setOAuthUserId(new BigInteger(oauthUserAttributes.get("oAuthUserId")));
+        user.setLocale(oauthUserAttributes.get("locale"));
+      }
+    } catch (Exception e) {
+      log.warn("Exception occured while at OAuth Post Processing: " + e.toString());
+    } finally {
+      log.info("saving OAuth User: " + user.toString());
+      userRepository.save(user);
+    }
   }
 }
