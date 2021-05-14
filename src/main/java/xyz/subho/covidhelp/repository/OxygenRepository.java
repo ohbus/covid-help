@@ -31,8 +31,10 @@ import xyz.subho.covidhelp.entity.OxygenLead;
 @Repository
 public interface OxygenRepository extends CrudRepository<OxygenLead, Long> {
   public OxygenLead findByOxyPropContactPrimary(String oxyPropContactPrimary);
+
   public OxygenLead findByLocationURL(String LocationURL);
+
   public OxygenLead findByLocationLat(String LocationLat);
+
   public OxygenLead findByLocationLon(String LocationLon);
-  
 }
