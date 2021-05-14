@@ -38,19 +38,35 @@ public class OxygenServiceImpl implements OxygenService {
 
   @Autowired private OxygenRepository oxygenRepository;
 
-  public void UpdateOxygenLead(OxygenLead oxygen) {}
-
+  @Override
+  public void UpdateOxygenLead(OxygenLead oxygen,OxygenLead dupOxygen) {
+	  	dupOxygen.setOxyPropName(oxygen.getOxyPropName());
+	    dupOxygen.setOxyPropContactPrimary(oxygen.getOxyPropContactPrimary());
+	    dupOxygen.setOxyPropContactSecondary(oxygen.getOxyPropContactSecondary());
+	    dupOxygen.setLocationLat(oxygen.getLocationLat());
+	    dupOxygen.setLocationLon(oxygen.getLocationLon());
+	    dupOxygen.setLocationAcu(oxygen.getLocationAcu());
+	    dupOxygen.setLocationTimestamp(oxygen.getLocationTimestamp());
+	    dupOxygen.setLocationUrl(oxygen.getLocationUrl());
+	    dupOxygen.setLastVerifiedAt(oxygen.getLastVerifiedAt());
+	    dupOxygen.setVerifiedCount(oxygen.getVerifiedCount());
+	    dupOxygen.setLastUnavailableAt(oxygen.getLastUnavailableAt());
+	    dupOxygen.setUnavailableCount(oxygen.getUnavailableCount());
+	    oxygenRepository.save(dupOxygen);
+  }
+  
+  @Override
   public void newOxygenLead(OxygenLead oxygen) {
     String primaryCont = oxygen.getOxyPropContactPrimary();
     try {
       // TODO: Duplicate Oxygen Lead
       OxygenLead dupOxygen = oxygenRepository.findByOxyPropContactPrimary(primaryCont);
-      if (dupOxygen.getOxyPropContactPrimary().equals(primaryCont)) UpdateOxygenLead(oxygen);
-      else oxygenRepository.save(oxygen);
+      if (dupOxygen.getOxyPropContactPrimary().equals(primaryCont)) 
+    	  UpdateOxygenLead(oxygen,dupOxygen);
+      else 
+    	  oxygenRepository.save(oxygen);
     } catch (Exception e) {
       log.info(e.toString());
-    } finally {
-
     }
   }
 }
