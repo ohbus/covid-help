@@ -23,4 +23,20 @@
 
 package xyz.subho.covidhelp.service;
 
-public interface OxygenService {}
+public interface OxygenService {
+  // get by Id
+  // public OxygenLead findOxygenById(Long Id);
+  // update
+  // public void UpdateOxygenLead(OxygenLead ol);
+  // get
+  // public OxygenLead getOxygenLead(Long id);
+  // set
+  // public void setOxygenLead(Long id);
+  // create
+  // public void createOxygenLead();
+  // last verified
+  // public void updateLastVerified(Long id);
+  // last unavailable
+  // public void updateUnavailability(Long id);
+
+}

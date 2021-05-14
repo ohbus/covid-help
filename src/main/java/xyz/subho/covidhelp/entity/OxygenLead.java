@@ -46,13 +46,22 @@ public class OxygenLead {
   private Long oxyLeadId;
 
   private String oxyPropName;
+
+  @Column(nullable = false, unique = true)
   private String oxyPropContactPrimary;
+
   private String oxyPropContactSecondary;
 
+  @Column(nullable = false)
   private BigDecimal locationLat;
+
+  @Column(nullable = false)
   private BigDecimal locationLon;
+
   private BigDecimal locationAcu;
   private Date locationTimestamp;
+
+  @Column(nullable = false)
   private String locationUrl;
 
   private Date lastVerifiedAt;
@@ -155,11 +164,11 @@ public class OxygenLead {
     this.locationTimestamp = locationTimestamp;
   }
 
-  public void setLastVerifiedAt() {
+  private void setLastVerifiedAt() {
     this.lastUnavailableAt = new Date(System.currentTimeMillis());
   }
 
-  public void setLastUnavailableAt() {
+  private void setLastUnavailableAt() {
     this.lastUnavailableAt = new Date(System.currentTimeMillis());
   }
 
