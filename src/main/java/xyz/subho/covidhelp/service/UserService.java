@@ -33,6 +33,8 @@ public interface UserService {
   public boolean isUserEnabled(Long id);
 
   public boolean isUserEnabled(User user);
+  
+  public User getUserById(Long id);
 
   public void processOAuthPostLogin(Map<String, String> authUserAtributes);
 }

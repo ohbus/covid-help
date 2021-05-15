@@ -25,6 +25,8 @@ package xyz.subho.covidhelp.service.impl;
 
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.Optional;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,9 +66,10 @@ public class UserServiceImpl implements UserService {
     var user = new User();
     var currentUserEmail = oauthUserAttributes.get("email");
     try {
-      user = getUserByEmailId(currentUserEmail);
-      if (user.getEmailId().equals(currentUserEmail)) {
+      var getUser = getUserByEmailId(currentUserEmail);
+      if (getUser != null && getUser.getEmailId().equals(currentUserEmail)) {
         log.info("User Already exists");
+        user = getUser;
       } else {
         user.enableUser();
         user.setProvider(
@@ -78,14 +81,29 @@ public class UserServiceImpl implements UserService {
         user.setPictureUrl(oauthUserAttributes.get("picture"));
         user.setGivenName(oauthUserAttributes.get("given_name"));
         user.setFamilyName(oauthUserAttributes.get("family_name"));
-        user.setOAuthUserId(new BigInteger(oauthUserAttributes.get("oAuthUserId")));
+        user.setOAuthUserId(oauthUserAttributes.get("oAuthUserId"));
         user.setLocale(oauthUserAttributes.get("locale"));
+        //This is Khilli
+        if (user.getContactNo().isEmpty())
+        	user.setContactNo(null);
       }
     } catch (Exception e) {
       log.warn("Exception occured while at OAuth Post Processing: " + e.toString());
     } finally {
       log.info("saving OAuth User: " + user.toString());
-      userRepository.save(user);
+      try {
+      	userRepository.save(user);
+      } catch (Exception e) {
+    	  log.warn("Exception occured while Saving Data to Databse: " + e.toString());
+	}
     }
   }
+
+	@Override
+	public User getUserById(Long id) {
+		Optional<User> user = userRepository.findById(id);
+		if (user.isPresent())
+			return user.get();
+		return null;
+	}
 }

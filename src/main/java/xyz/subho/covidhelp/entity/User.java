@@ -73,7 +73,7 @@ public class User implements UserDetails {
   private String givenName;
   private String familyName;
   private String locale;
-  private BigInteger oAuthUserId;
+  private String oAuthUserId;
 
   @Enumerated(EnumType.STRING)
   private Provider provider;
@@ -81,6 +81,8 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JsonIgnore
   private Set<UserRole> userRoles;
+  
+  
 
   private boolean enabled;
 
@@ -90,7 +92,7 @@ public class User implements UserDetails {
   private String lastIp;
   private Date lastLogin;
   private String lastLocation;
-
+  
   // Default Constructor
   public User() {
     this.userId = 0L;
@@ -102,14 +104,16 @@ public class User implements UserDetails {
     this.givenName = "";
     this.familyName = "";
     this.locale = "";
-    this.oAuthUserId = BigInteger.valueOf(0L);
+    this.oAuthUserId = "";
     this.provider = Provider.UNAVAILABLE;
     this.userRoles = new HashSet<>();
     this.enabled = false;
     this.currentIp = "";
     this.currentLogin = new Date(0);
+    this.currentLocation = "";
     this.lastIp = "";
     this.lastLogin = new Date(0);
+    this.lastLocation = "";
   }
 
   /**
