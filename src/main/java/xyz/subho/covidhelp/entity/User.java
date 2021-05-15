@@ -24,7 +24,6 @@
 package xyz.subho.covidhelp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -81,8 +80,6 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JsonIgnore
   private Set<UserRole> userRoles;
-  
-  
 
   private boolean enabled;
 
@@ -92,7 +89,7 @@ public class User implements UserDetails {
   private String lastIp;
   private Date lastLogin;
   private String lastLocation;
-  
+
   // Default Constructor
   public User() {
     this.userId = 0L;

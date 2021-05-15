@@ -23,18 +23,13 @@
 
 package xyz.subho.covidhelp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,7 +48,7 @@ public class OxygenLead {
   private String oxyPropName;
   private String oxyPropContactPrimary;
   private String oxyPropContactSecondary;
-  
+
   /*
   @ManyToMany(mappedBy = "userId", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
   @JsonIgnore

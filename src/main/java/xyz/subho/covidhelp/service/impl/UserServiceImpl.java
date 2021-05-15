@@ -23,10 +23,8 @@
 
 package xyz.subho.covidhelp.service.impl;
 
-import java.math.BigInteger;
 import java.util.Map;
 import java.util.Optional;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,27 +81,25 @@ public class UserServiceImpl implements UserService {
         user.setFamilyName(oauthUserAttributes.get("family_name"));
         user.setOAuthUserId(oauthUserAttributes.get("oAuthUserId"));
         user.setLocale(oauthUserAttributes.get("locale"));
-        //This is Khilli
-        if (user.getContactNo().isEmpty())
-        	user.setContactNo(null);
+        // This is Khilli
+        if (user.getContactNo().isEmpty()) user.setContactNo(null);
       }
     } catch (Exception e) {
       log.warn("Exception occured while at OAuth Post Processing: " + e.toString());
     } finally {
       log.info("saving OAuth User: " + user.toString());
       try {
-      	userRepository.save(user);
+        userRepository.save(user);
       } catch (Exception e) {
-    	  log.warn("Exception occured while Saving Data to Databse: " + e.toString());
-	}
+        log.warn("Exception occured while Saving Data to Databse: " + e.toString());
+      }
     }
   }
 
-	@Override
-	public User getUserById(Long id) {
-		Optional<User> user = userRepository.findById(id);
-		if (user.isPresent())
-			return user.get();
-		return null;
-	}
+  @Override
+  public User getUserById(Long id) {
+    Optional<User> user = userRepository.findById(id);
+    if (user.isPresent()) return user.get();
+    return null;
+  }
 }
