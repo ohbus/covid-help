@@ -23,10 +23,49 @@
 
 package xyz.subho.covidhelp.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import xyz.subho.covidhelp.entity.OxygenLead;
+import xyz.subho.covidhelp.repository.OxygenRepository;
 import xyz.subho.covidhelp.service.OxygenService;
 
 @Service
 @Transactional
-public class OxygenServiceImpl implements OxygenService {}
+@Slf4j
+public class OxygenServiceImpl implements OxygenService {
+
+  @Autowired private OxygenRepository oxygenRepository;
+
+  @Override
+  public void UpdateOxygenLead(OxygenLead oxygen, OxygenLead dupOxygen) {
+    dupOxygen.setOxyPropName(oxygen.getOxyPropName());
+    dupOxygen.setOxyPropContactPrimary(oxygen.getOxyPropContactPrimary());
+    dupOxygen.setOxyPropContactSecondary(oxygen.getOxyPropContactSecondary());
+    dupOxygen.setLocationLat(oxygen.getLocationLat());
+    dupOxygen.setLocationLon(oxygen.getLocationLon());
+    dupOxygen.setLocationAcu(oxygen.getLocationAcu());
+    dupOxygen.setLocationTimestamp(oxygen.getLocationTimestamp());
+    dupOxygen.setLocationUrl(oxygen.getLocationUrl());
+    dupOxygen.setLastVerifiedAt(oxygen.getLastVerifiedAt());
+    dupOxygen.setVerifiedCount(oxygen.getVerifiedCount());
+    dupOxygen.setLastUnavailableAt(oxygen.getLastUnavailableAt());
+    dupOxygen.setUnavailableCount(oxygen.getUnavailableCount());
+    oxygenRepository.save(dupOxygen);
+  }
+
+  @Override
+  public void newOxygenLead(OxygenLead oxygen) {
+    String primaryCont = oxygen.getOxyPropContactPrimary();
+    try {
+      // TODO: Duplicate Oxygen Lead
+      OxygenLead dupOxygen = oxygenRepository.findByOxyPropContactPrimary(primaryCont);
+      if (dupOxygen.getOxyPropContactPrimary().equals(primaryCont))
+        UpdateOxygenLead(oxygen, dupOxygen);
+      else oxygenRepository.save(oxygen);
+    } catch (Exception e) {
+      log.info(e.toString());
+    }
+  }
+}

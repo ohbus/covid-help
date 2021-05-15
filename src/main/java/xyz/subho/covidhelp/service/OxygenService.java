@@ -23,4 +23,11 @@
 
 package xyz.subho.covidhelp.service;
 
-public interface OxygenService {}
+import xyz.subho.covidhelp.entity.OxygenLead;
+
+public interface OxygenService {
+
+  public void UpdateOxygenLead(OxygenLead oxygen, OxygenLead dupOxygen);
+
+  public void newOxygenLead(OxygenLead oxygen);
+}

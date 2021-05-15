@@ -23,9 +23,18 @@
 
 package xyz.subho.covidhelp.repository;
 
+import java.util.*;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import xyz.subho.covidhelp.entity.OxygenLead;
 
 @Repository
-public interface OxygenRepository extends CrudRepository<OxygenLead, Long> {}
+public interface OxygenRepository extends CrudRepository<OxygenLead, Long> {
+  public OxygenLead findByOxyPropContactPrimary(String oxyPropContactPrimary);
+
+  public OxygenLead findByLocationURL(String LocationURL);
+
+  public OxygenLead findByLocationLat(String LocationLat);
+
+  public OxygenLead findByLocationLon(String LocationLon);
+}
