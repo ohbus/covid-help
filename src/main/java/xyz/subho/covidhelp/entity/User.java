@@ -24,7 +24,6 @@
 package xyz.subho.covidhelp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -73,7 +72,7 @@ public class User implements UserDetails {
   private String givenName;
   private String familyName;
   private String locale;
-  private BigInteger oAuthUserId;
+  private String oAuthUserId;
 
   @Enumerated(EnumType.STRING)
   private Provider provider;
@@ -102,14 +101,16 @@ public class User implements UserDetails {
     this.givenName = "";
     this.familyName = "";
     this.locale = "";
-    this.oAuthUserId = BigInteger.valueOf(0L);
+    this.oAuthUserId = "";
     this.provider = Provider.UNAVAILABLE;
     this.userRoles = new HashSet<>();
     this.enabled = false;
     this.currentIp = "";
     this.currentLogin = new Date(0);
+    this.currentLocation = "";
     this.lastIp = "";
     this.lastLogin = new Date(0);
+    this.lastLocation = "";
   }
 
   /**

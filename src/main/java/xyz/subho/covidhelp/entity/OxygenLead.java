@@ -42,7 +42,7 @@ public class OxygenLead {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id")
+  @Column(name = "oxy_id")
   private Long oxyLeadId;
 
   private String oxyPropName;
@@ -53,6 +53,11 @@ public class OxygenLead {
   private String oxyPropContactSecondary;
 
   @Column(nullable = false)
+  /*
+  @ManyToMany(mappedBy = "userId", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Set<User> volenteerIds;*/
+
   private BigDecimal locationLat;
 
   @Column(nullable = false)
