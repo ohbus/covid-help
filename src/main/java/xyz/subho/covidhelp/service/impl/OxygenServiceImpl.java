@@ -62,19 +62,17 @@ public class OxygenServiceImpl implements OxygenService {
       // TODO: Duplicate Oxygen Lead
       OxygenLead dupOxygen = oxygenRepository.findByOxyPropContactPrimary(primaryCont);
       if (dupOxygen.getOxyPropContactPrimary().equals(primaryCont))
-    	  UpdateOxygenLead(oxygen, dupOxygen);
-      else 
-    	  oxygenRepository.save(oxygen);
+        UpdateOxygenLead(oxygen, dupOxygen);
+      else oxygenRepository.save(oxygen);
     } catch (Exception e) {
       log.info(e.toString());
     }
   }
 
-	@Override
-	public OxygenLead getOxygenById(Long OxyId) {
-		// TODO Auto-generated method stub
-		OxygenLead ox= getOxygenById(OxyId);
-		return ox;
-		
-	}
+  @Override
+  public OxygenLead getOxygenById(Long OxyId) {
+    // TODO Auto-generated method stub
+    OxygenLead ox = getOxygenById(OxyId);
+    return ox;
+  }
 }

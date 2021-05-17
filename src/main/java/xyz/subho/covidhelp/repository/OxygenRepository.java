@@ -33,7 +33,7 @@ public interface OxygenRepository extends CrudRepository<OxygenLead, Long> {
   public OxygenLead findByOxyPropContactPrimary(String oxyPropContactPrimary);
 
   public OxygenLead findByOxyLeadId(Long OxyId);
-  
+
   public OxygenLead findByLocationURL(String LocationURL);
 
   public OxygenLead findByLocationLat(String LocationLat);
