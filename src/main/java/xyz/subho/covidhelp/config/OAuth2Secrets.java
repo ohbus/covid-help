@@ -21,19 +21,37 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
-import org.junit.jupiter.api.Test;
+@Configuration
+public class OAuth2Secrets {
 
-class ApplicationStartTest {
+  @Value("spring.security.oauth2.client.registration.google.client-id")
+  private String googleCleintId;
 
-  private static final boolean CONSTANT = true;
+  @Value("spring.security.oauth2.client.registration.google.client-secret")
+  private String googleClientSecret;
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
+  /** @return the googleCleintId */
+  protected final String getGoogleCleintId() {
+    return googleCleintId;
+  }
+
+  /** @param googleCleintId the googleCleintId to set */
+  protected final void setGoogleCleintId(String googleCleintId) {
+    this.googleCleintId = googleCleintId;
+  }
+
+  /** @return the googleClientSecret */
+  protected final String getGoogleClientSecret() {
+    return googleClientSecret;
+  }
+
+  /** @param googleClientSecret the googleClientSecret to set */
+  protected final void setGoogleClientSecret(String googleClientSecret) {
+    this.googleClientSecret = googleClientSecret;
   }
 }

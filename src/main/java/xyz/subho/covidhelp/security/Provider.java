@@ -21,19 +21,10 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
-
-class ApplicationStartTest {
-
-  private static final boolean CONSTANT = true;
-
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
-  }
+public enum Provider {
+  UNAVAILABLE,
+  GOOGLE,
+  GITHUB
 }

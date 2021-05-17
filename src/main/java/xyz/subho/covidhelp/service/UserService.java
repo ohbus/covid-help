@@ -21,19 +21,20 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Map;
+import xyz.subho.covidhelp.entity.User;
 
-import org.junit.jupiter.api.Test;
+public interface UserService {
 
-class ApplicationStartTest {
+  public User getUserByEmailId(String emailId);
 
-  private static final boolean CONSTANT = true;
+  public boolean isUserEnabled(Long id);
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
-  }
+  public boolean isUserEnabled(User user);
+
+  public User getUserById(Long id);
+
+  public void processOAuthPostLogin(Map<String, String> authUserAtributes);
 }

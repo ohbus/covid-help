@@ -21,19 +21,27 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.security.core.GrantedAuthority;
 
-import org.junit.jupiter.api.Test;
+public class Authority implements GrantedAuthority {
 
-class ApplicationStartTest {
+  private static final long serialVersionUID = -4220988660369947639L;
+  private final String authority;
 
-  private static final boolean CONSTANT = true;
+  public Authority() {
+    super();
+    this.authority = "";
+  }
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
+  /** @param authority */
+  public Authority(String authority) {
+    this.authority = authority;
+  }
+
+  @Override
+  public String getAuthority() {
+    return authority;
   }
 }

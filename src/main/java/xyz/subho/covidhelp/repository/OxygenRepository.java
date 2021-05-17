@@ -21,19 +21,22 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.*;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import xyz.subho.covidhelp.entity.OxygenLead;
 
-import org.junit.jupiter.api.Test;
+@Repository
+public interface OxygenRepository extends CrudRepository<OxygenLead, Long> {
+  public OxygenLead findByOxyPropContactPrimary(String oxyPropContactPrimary);
 
-class ApplicationStartTest {
+  public OxygenLead findByOxyLeadId(Long OxyId);
 
-  private static final boolean CONSTANT = true;
+  public OxygenLead findByLocationURL(String LocationURL);
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
-  }
+  public OxygenLead findByLocationLat(String LocationLat);
+
+  public OxygenLead findByLocationLon(String LocationLon);
 }

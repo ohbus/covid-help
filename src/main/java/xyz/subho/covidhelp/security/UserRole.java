@@ -21,19 +21,51 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import xyz.subho.covidhelp.entity.User;
 
-import org.junit.jupiter.api.Test;
+@Entity
+@Data
+@AllArgsConstructor
+@Table(name = "user_role")
+public class UserRole {
 
-class ApplicationStartTest {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long userRoleId;
 
-  private static final boolean CONSTANT = true;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "userId")
+  private User user;
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "roleId")
+  private Role role;
+
+  // Default Constructor
+  public UserRole() {
+    this.userRoleId = 0L;
+    this.user = new User();
+    this.role = new Role();
+  }
+
+  /**
+   * @param user
+   * @param role
+   */
+  public UserRole(User user, Role role) {
+    this.user = user;
+    this.role = role;
   }
 }
