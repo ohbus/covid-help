@@ -31,4 +31,5 @@ import xyz.subho.covidhelp.entity.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 
   public User findByEmailId(String emailId);
+  
 }
