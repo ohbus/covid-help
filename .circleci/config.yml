@@ -41,6 +41,7 @@ jobs:
         echo ${CIRCLE_PULL_REQUEST}
         echo ${CIRCLE_PR_NUMBER}
         echo ${CI_PULL_REQUEST}
+        echo ${CIRCLE_BRANCH}
 
     - run: |
         if [ -n "${CIRCLE_PR_NUMBER}" ]; then
