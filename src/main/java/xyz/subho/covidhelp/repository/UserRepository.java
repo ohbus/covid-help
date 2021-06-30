@@ -21,19 +21,14 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import xyz.subho.covidhelp.entity.User;
 
-import org.junit.jupiter.api.Test;
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
 
-class ApplicationStartTest {
-
-  private static final boolean CONSTANT = true;
-
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
-  }
+  public User findByEmailId(String emailId);
 }

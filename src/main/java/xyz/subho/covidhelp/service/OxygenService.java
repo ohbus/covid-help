@@ -21,19 +21,13 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import xyz.subho.covidhelp.entity.OxygenLead;
 
-import org.junit.jupiter.api.Test;
+public interface OxygenService {
 
-class ApplicationStartTest {
+  public void UpdateOxygenLead(OxygenLead oxygen, OxygenLead dupOxygen);
 
-  private static final boolean CONSTANT = true;
-
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
-  }
+  public void newOxygenLead(OxygenLead oxygen);
 }

@@ -21,19 +21,46 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import org.junit.jupiter.api.Test;
+@Entity
+@Data
+@AllArgsConstructor
+public class Role {
 
-class ApplicationStartTest {
+  @Id
+  @Column(name = "roleId", nullable = false, updatable = false)
+  private Integer roleId;
 
-  private static final boolean CONSTANT = true;
+  private String name;
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
+  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<UserRole> userRoles;
+
+  // Default Constructor
+  public Role() {
+    this.roleId = 0;
+    this.name = "";
+    this.userRoles = new HashSet<>();
+  }
+
+  /**
+   * @param name
+   * @param userRoles
+   */
+  public Role(String name, Set<UserRole> userRoles) {
+    this.name = name;
+    this.userRoles = userRoles;
   }
 }

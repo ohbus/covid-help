@@ -70,13 +70,18 @@
 	<properties>
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+		<webjars.bootstrap.version>5.0.0</webjars.bootstrap.version>
+		<webjars.jquery.version>3.6.0</webjars.jquery.version>
+		<webjars.fontawesome.version>5.15.2</webjars.fontawesome.version>
+		<webjars.datatables.version>1.10.24</webjars.datatables.version>
+		<webjars.locator.version>0.40</webjars.locator.version>
+		<webjars.popper.version>2.9.2</webjars.popper.version>
+		<webjars.bootbox.version>4.4.0</webjars.bootbox.version>
+		<twilio.version>8.12.0</twilio.version>
 		<spotless.plugin.version>2.8.1</spotless.plugin.version>
 		<jacoco.version>0.8.6</jacoco.version>
 		<google-java-format.version>1.9</google-java-format.version>
 		<license-maven-plugin.version>3.0</license-maven-plugin.version>
-
-		<!-- SonarCloud -->
 		<sonar.projectKey>ohbus_covid-help</sonar.projectKey>
 		<sonar.organization>ohbus</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -85,25 +90,33 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -111,15 +124,36 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>		
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio 
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>${twilio.version}</version>
+		</dependency>
+		-->
+		
 	</dependencies>
 
 	<build>

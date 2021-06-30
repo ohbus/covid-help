@@ -21,19 +21,31 @@
  * THE SOFTWARE.
  */
 
-package xyz.subho.covidhelp;
+package xyz.subho.covidhelp.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.junit.jupiter.api.Test;
+@Slf4j
+@RestController
+public class HomeController {
 
-class ApplicationStartTest {
+  @GetMapping("/")
+  public String home() {
+    log.info("CAME at HOME");
+    return "home.html";
+  }
 
-  private static final boolean CONSTANT = true;
+  @GetMapping("/userFront")
+  public String userFront() {
+    log.info("CAME at userFront");
+    return "userFront.html";
+  }
 
-  @Test
-  void applicationStarts() {
-    CovidHelpApplication.main(new String[] {});
-    assertThat(CONSTANT).isTrue();
+  @GetMapping("/dashboard")
+  public String dashboard() {
+    log.info("CAME at DASHBOARD");
+    return "dashboard.html";
   }
 }
